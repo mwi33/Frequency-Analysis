@@ -1,58 +1,64 @@
-import matplotlib.pyplot as plt
+class Frequency_analysis:
+    
+    import matplotlib.pyplot as plt
+    
+    data = ""
 
-cipher_text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    def __init__(self, data_file):
+        
+        self.data_file= data_file
 
-'''
-Unicode (UTF-8) table
+    def load_data(self):
+        
+        data = open(self.data_file, "r")
 
-Capital Letters A-Z = Range 64 (0x41) - 90 (0x5a)
-Lower Case Letters a-z = Range 97 (0x61) - 122 (0x7a)
+        return data.read()
 
-'''
-
-class Cipher_text:
-    def __init__(self, cipher_text):
-        self.cipher_text = cipher_text
-
-    def load_cipher_text():
-        print("hello")
-
-    def count_upper_characters(self, cipher_text):
+    def count_upper_characters(self):
    
         # define empty dictionaries for letter and count key value pairs
         upper = {}
 
-        for character in range(65, 91):
+        print(self.data)
 
-            upper.update({chr(character):cipher_text.count(chr(character))})
+        for character in range(65, 91):
+            
+            upper.update({chr(character):self.load_data().count(chr(character))})
     
         return upper
     
-    def count_lower_characters(self, cipher_text):
+    def count_lower_characters(self):
  
         # define empty dictionaries for letter and count key value pairs
       
         lower = {}
         for character in range(65, 91):
 
-            lower.update({chr(character).lower():cipher_text.count(chr(character).lower())})
+            lower.update({chr(character).lower():self.load_data().count(chr(character).lower())})
 
         return lower 
 
-    def sum_upper_lower_characters(self, upper, lower):
+    def sum_upper_lower_characters(self):
   
     # define empty dictionaries for letter and count key value pairs
-        combined = {}  
-        for character in range(65, 91):
+        combined = {} 
+        lower_dict = self.count_lower_characters()
+        upper_dict = self.count_upper_characters()
+        
+        #for character in range(65, 91):
+     
+            #combined.update({chr(character).lower(): self.count_upper_characters().count(chr(character)) + self.count_lower_characters.count(chr(character).lower())})
 
-            combined.update({chr(character).lower(): upper.count(chr(character)) + lower.count(chr(character).lower())})
+            #return lower_dict
+        print(lower_dict["A"])
 
-        return combined
 
-    def calcuate_percentages(combined):
+
+
+    def calcuate_percentages(self):
 
         percentages = {}
-        for key, value in combined.items():
+        for key, value in self.sum_upper_lower_characters().items():
 
             percentages.update({key: round((value/total_count)*100, 4)})
 
@@ -67,3 +73,10 @@ class Cipher_text:
 
         plt.bar(x_axis, y_axis)
         plt.show()
+
+my_object = Frequency_analysis("test_data.txt")
+
+
+#print(my_object.count_upper_characters())
+#print(my_object.count_lower_characters())
+print(type(my_object.sum_upper_lower_characters()))
